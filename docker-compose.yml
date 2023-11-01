@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    networks:
+      - api-network
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./MongoDB_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopass
+
+networks:
+  api-network:
