@@ -35,15 +35,12 @@ def register_user(user_data):
 def login_user(login_data):
     existing_user = collection.find_one({"username": login_data.username})
     if existing_user:
-        # Use bcrypt's checkpw to verify the provided password against the hashed password
         hashed_password = existing_user.get("password", "")
         if bcrypt.checkpw(login_data.password.encode('utf-8'), hashed_password.encode('utf-8')):
-            return True  # User login successful
-
-    return False  # Login failed
+            return existing_user
+    return None
 
 def hash_password(password):
-    # Generate a salt and hash the password with bcrypt
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed_password.decode()
