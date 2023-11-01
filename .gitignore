@@ -1,5 +1,6 @@
 **/__pycache__/
 
 MongoDB_data/
+Redis_data/
 
 .env
