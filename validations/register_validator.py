@@ -1,6 +1,10 @@
+
+from utils.enums import Register
 import re
 from pydantic import BaseModel, EmailStr, constr, validator
 from utils.enums import Register
+import bleach
+import bcrypt  # Import bcrypt for password hashing
 
 class UserRegistrationRequest(BaseModel):
     username: constr(
@@ -19,4 +23,12 @@ class UserRegistrationRequest(BaseModel):
         pattern = r'^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\W_]).*$'
         if not re.match(pattern, value):
             raise ValueError("Password must contain alphanumeric and special characters")
-        return value
+        # Hash the password before validation
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(value.encode('utf-8'), salt)
+        return hashed_password.decode()
+
+    @validator("username", "email")
+    def sanitize_input(cls, value):
+        # Use bleach to sanitize input and remove potential XSS payloads
+        return bleach.clean(value)

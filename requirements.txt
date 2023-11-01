@@ -7,3 +7,5 @@ requests
 pymongo
 jwt
 python-decouple
+bleach
+bcrypt
