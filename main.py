@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from routers import root
-from routers.user import register, login
+from routers.user import register, login, user_details
 
 
 
@@ -11,6 +11,7 @@ URL_PREFIX = "/api/v1"
 app.include_router(root.router, prefix= URL_PREFIX)
 app.include_router(register.router, prefix= URL_PREFIX)
 app.include_router(login.router, prefix= URL_PREFIX)
+app.include_router(user_details.router, prefix= URL_PREFIX)
 
 
 if __name__ == "__main__":

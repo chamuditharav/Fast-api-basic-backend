@@ -25,8 +25,14 @@ class UserRegistrationRequest(BaseModel):
             raise ValueError("Password must contain alphanumeric and special characters")
         # Hash the password before validation
         salt = bcrypt.gensalt()
+<<<<<<< HEAD
         hashed_password = bcrypt.hashpw(value.encode('utf-8'), salt)
         return hashed_password.decode()
+=======
+        #hashed_password = bcrypt.hashpw(value.encode('utf-8'), salt)
+        #return hashed_password.decode()
+        return value
+>>>>>>> 1360e3e (Fix: JWT validation and Creation, User Details)
 
     @validator("username", "email")
     def sanitize_input(cls, value):
