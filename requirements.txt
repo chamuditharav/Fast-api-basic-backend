@@ -1,7 +1,8 @@
 fastapi
-pydantic
 uvicorn
+pydantic
+pydantic[email]
 requests
 pymongo
-pydantic[email]
+jwt
 python-decouple
