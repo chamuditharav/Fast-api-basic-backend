@@ -4,6 +4,7 @@ from routers import root
 from routers.user import register, login
 
 
+
 app = FastAPI()
 URL_PREFIX = "/api/v1"
 
