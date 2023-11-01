@@ -6,10 +6,10 @@ class UserLoginRequest(BaseModel):
 
     @validator("username")
     def username_valid(cls, username):
-        # Your username validation logic here
+        # username validation logic here
         return username
 
     @validator("password")
     def password_valid(cls, password):
-        # Your password validation logic here
+        # password validation logic here
         return password
