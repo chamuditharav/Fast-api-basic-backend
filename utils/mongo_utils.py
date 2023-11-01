@@ -17,3 +17,10 @@ def register_user(user_data):
 
     inserted_user = collection.insert_one(user_data)
     return True  # User registration successful
+
+
+def login_user(login_data):
+    existing_user = collection.find_one({"username": login_data.username, "password": login_data.password})
+    if existing_user:
+        return True  # User login successful
+    return False  # Login failed

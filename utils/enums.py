@@ -6,6 +6,10 @@ class Register(Enum):
     PASSWORD_MIN_LENGTH = 8
     PASSWORD_MAX_LENGTH = 128
 
+class Roles(Enum):
+    ADMIN = "ADMIN"
+    USER = "USER"
+
 
 def GET_ENUM(enum_value):
     return (enum_value)
