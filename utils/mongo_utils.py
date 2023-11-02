@@ -2,10 +2,7 @@ from pymongo import MongoClient
 import json
 from decouple import config
 import bcrypt
-<<<<<<< HEAD
-=======
 import uuid
->>>>>>> 1360e3e (Fix: JWT validation and Creation, User Details)
 
 MONGO_URI = config("MONGO_URI")
 MONGO_DB_NAME = config("MONGO_DB_NAME")
