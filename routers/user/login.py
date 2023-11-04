@@ -13,7 +13,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(config("JWT_EXP_TIME"))
 async def startup():
     await init_rate_limiter()
 
-@router.post("/user-login", dependencies=[Depends(login_limiter)])
+@router.post("/user-login", status_code= 200, dependencies=[Depends(login_limiter)])
 async def login_user_route(login_data: UserLoginRequest):
     user_data = login_user(login_data)
     if(user_data != None):

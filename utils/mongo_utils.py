@@ -47,6 +47,13 @@ def login_user(login_data):
             return existing_user
     return None
 
+def user_exists_by_id(user_id):
+    existing_user = collection.find_one({"userID": user_id})
+    return existing_user is not None
+
+def get_user_by_id(user_id):
+    user_data = collection.find_one({"userID": user_id})
+    return user_data
 
 def hash_password(password):
     salt = bcrypt.gensalt()

@@ -3,4 +3,5 @@
 MongoDB_data/
 Redis_data/
 
+ISSUES.txt
 .env

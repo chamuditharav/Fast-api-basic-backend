@@ -5,11 +5,15 @@ from fastapi import Depends
 from decouple import config
 
 REDIS_URI = config("REDIS_URI")
+
 REGISTER_REQ_RATE = int(config("REGISTER_REQ_RATE"))
 REGISTER_TIME_WINDOW = int(config("REGISTER_TIME_WINDOW"))
 
 LOGIN_REQ_RATE = int(config("LOGIN_REQ_RATE"))
 LOGIN_TIME_WINDOW = int(config("LOGIN_TIME_WINDOW"))
+
+REFRESH_TOKEN_REQ_RATE = int(config("LOGIN_REQ_RATE"))
+REFRESH_TOKEN_TIME_WINDOW = int(config("LOGIN_TIME_WINDOW"))
 
 async def init_rate_limiter():
     redis = Redis.from_url(REDIS_URI, encoding="utf-8", decode_responses=True)
@@ -17,5 +21,6 @@ async def init_rate_limiter():
 
 
 
-login_limiter = RateLimiter(times=LOGIN_REQ_RATE, seconds=LOGIN_TIME_WINDOW)
 register_limiter = RateLimiter(times=REGISTER_REQ_RATE, seconds=REGISTER_TIME_WINDOW)
+login_limiter = RateLimiter(times=LOGIN_REQ_RATE, seconds=LOGIN_TIME_WINDOW)
+refresh_token_limter = RateLimiter(times=REFRESH_TOKEN_REQ_RATE, seconds=REFRESH_TOKEN_TIME_WINDOW)
