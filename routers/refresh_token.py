@@ -28,15 +28,12 @@ async def refresh_token_route(refresh_token_request: RefreshTokenRequest, auth: 
             raise HTTPException(status_code=401, detail="Invalid token")
         elif(user_exists_by_id(payload["sub"]) and payload["sub"] == refresh_token_request.userID):
             access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-            if(payload["role"] == Roles.USER.value):
-                user_data = get_user_by_id(payload["sub"])
-                refreshed_token = create_user_access_token(
-                                    data= user_data,
-                                    expires_delta=access_token_expires,
-                                )
-                return {"refreshed_token": refreshed_token, "token_type": "bearer"}
-            elif(payload["role"] == Roles.ADMIN.value):
-                pass
+            user_data = get_user_by_id(payload["sub"])
+            refreshed_token = create_user_access_token(
+                                data= user_data,
+                                expires_delta=access_token_expires,
+                            )
+            return {"refreshed_token": refreshed_token, "token_type": "bearer"}
         else:
              raise HTTPException(status_code=401, detail="No user found")
 
