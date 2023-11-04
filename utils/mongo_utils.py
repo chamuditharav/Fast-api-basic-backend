@@ -33,12 +33,20 @@ def register_user(user_data):
 
 
 def login_user(login_data):
-    existing_user = collection.find_one({"username": login_data.username})
+    existing_user = collection.find_one(
+        {
+            "$or": [
+                {"username": login_data.username},
+                {"email": login_data.username},
+            ]
+        }
+    )
     if existing_user:
         hashed_password = existing_user.get("password", "")
         if bcrypt.checkpw(login_data.password.encode('utf-8'), hashed_password.encode('utf-8')):
             return existing_user
     return None
+
 
 def hash_password(password):
     salt = bcrypt.gensalt()
