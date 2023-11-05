@@ -16,6 +16,8 @@ class UserRegistrationRequest(BaseModel):
         max_length=Register.PASSWORD_MAX_LENGTH.value,
     )
     email: EmailStr
+    first_name: str
+    last_name: str
 
     @validator("password")
     def validate_password(cls, value):
@@ -29,7 +31,7 @@ class UserRegistrationRequest(BaseModel):
         #return hashed_password.decode()
         return value
 
-    @validator("username", "email")
+    @validator("username", "email", "first_name", "last_name")
     def sanitize_input(cls, value):
         # Use bleach to sanitize input and remove potential XSS payloads
         return bleach.clean(value)

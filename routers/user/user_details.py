@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from validations.user_details_validator import UserDetailsRequest
 from decouple import config
-from utils.mongo_utils import login_user
+from utils.mongo_utils import user_exists_by_id, get_user_by_id
 from utils.token_utils import validate_token
 from datetime import timedelta
 from utils.enums import Roles
@@ -21,5 +21,9 @@ async def user_details_route(user_details_request: UserDetailsRequest, auth: t.O
         payload = validate_token(auth.credentials)
         if not payload:
             raise HTTPException(status_code=401, detail="Invalid token")
-        user_details = {"username": payload["sub"], "role": Roles.USER.value}
-        return user_details
+        elif(user_exists_by_id(payload["sub"]) and payload["sub"] == user_details_request.userID):
+            #user_details = {"username": payload["sub"], "role": Roles.USER.value}
+            user_details = get_user_by_id(payload["sub"])
+            return user_details
+        else:
+            raise HTTPException(status_code=401, detail="Unauthorized")

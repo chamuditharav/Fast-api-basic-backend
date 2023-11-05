@@ -65,9 +65,16 @@ def user_exists_by_id(user_id):
 
 def get_user_by_id(user_id):
     user_data = collection.find_one({"userID": user_id})
+    if user_data:
+        user_data.pop("_id", None)
+        user_data.pop("password", None)
     return user_data
 
 def hash_password(password):
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
     return hashed_password.decode()
+
+
+if __name__ == "__main__":
+    print(get_user_by_id("4dc7e721-0ec0-44e3-912c-5151d52c3613"))

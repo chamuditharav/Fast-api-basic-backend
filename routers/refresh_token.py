@@ -35,7 +35,7 @@ async def refresh_token_route(refresh_token_request: RefreshTokenRequest, auth: 
                             )
             return {"refreshed_token": refreshed_token, "token_type": "bearer"}
         else:
-             raise HTTPException(status_code=401, detail="No user found")
+             raise HTTPException(status_code=401, detail="Unauthorized")
 
             # user_details = {"username": payload["sub"], "role": Roles.USER.value}
             # return user_details
