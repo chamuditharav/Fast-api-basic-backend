@@ -18,9 +18,20 @@ def generate_unique_user_id():
             return user_id
 
 def register_user(user_data):
-    existing_user = collection.find_one({"username": user_data["username"]})
+    existing_user = collection.find_one(
+        {
+            "$or": [
+                {"username": user_data["username"]},
+                {"email": user_data["email"]},
+            ]
+        }
+    )
+
     if existing_user:
-        return False  # User already exists
+        if existing_user.get("username") == user_data["username"]:
+            return "USERNAME_EXISTS"  # User with the same username already exists
+        elif existing_user.get("email") == user_data["email"]:
+            return "EMAIL_EXISTS"  # User with the same email already exists
 
     # Generate a unique userID
     user_data["userID"] = generate_unique_user_id()
@@ -29,7 +40,8 @@ def register_user(user_data):
     user_data["password"] = hash_password(user_data["password"])
 
     inserted_user = collection.insert_one(user_data)
-    return True  # User registration successful
+    return "REGISTRATION_SUCCESS"  # User registration successful
+
 
 
 def login_user(login_data):
